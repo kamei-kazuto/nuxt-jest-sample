@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    <p>{{ name }} は {{ priceWithTax }}円</p>
+    <p>{{ product }} は {{ priceWithTax }}円</p>
   </section>
 </template>
 

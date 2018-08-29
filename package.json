@@ -11,9 +11,11 @@
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
-    "test": "jest"
+    "test": "jest",
+    "storybook": "start-storybook -p 9001"
   },
   "dependencies": {
+    "@storybook/vue": "^3.4.10",
     "nuxt": "^1.0.0"
   },
   "devDependencies": {

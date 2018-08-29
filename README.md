@@ -88,7 +88,46 @@ param: Joi.string().allow(null),
 const { json } = await frisby.get('https://*********.com')
 ```
 
+## StoryBookの導入方法
+
+1. libraryの追加
+```
+yarn add @storybook/vue
+```
+
+2. 設定ファイル（.storybook/config.js）を追加する。
+
+```
+import { configure } from '@storybook/vue'
+
+const loadStories = () => {
+  require("../stories/index") // ここに読み取るstorybook内容を追加
+}
+
+configure(loadStories, module)
+```
+
+3. componentの内容を設定ファイルで追加した位置に追加
+
+```
+import { storiesOf } from '@storybook/vue'
+import sample from '../components/sample.vue'
+
+storiesOf('sample', module) // sampleの部分をスラッシュで区切ると階層構造のナビになる。
+  .add('default',() => {
+    return {
+      components: { sample },
+      template: `<sample />`
+    }
+  })
+
+```
+
+
 ## 参考にした記事
+
 **参考記事**
-https://qiita.com/H1Gdev/items/7aa5ca8a78839c615ac4
-http://su-kun1899.hatenablog.com/entry/2018/01/25/110000
+
+https://qiita.com/H1Gdev/items/7aa5ca8a78839c615ac4  
+http://su-kun1899.hatenablog.com/entry/2018/01/25/110000  
+https://qiita.com/masaakikunsan/items/28c66a5f89b6c6e14e3d
