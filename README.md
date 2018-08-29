@@ -77,11 +77,16 @@ yarn add -D frisby
 https://github.com/hapijs/joi/blob/v13.6.0/API.md
 
 
-nullを許容したいときは下記のようにする。
+- nullを許容したいときは下記のようにする。
 ```
 param: Joi.string().allow(null),
 ```
 
+- リクエストしたデータを使いたいときは下記のようにする。
+
+```
+const { json } = await frisby.get('https://*********.com')
+```
 
 ## 参考にした記事
 **参考記事**

@@ -46,6 +46,7 @@ it('Qiitaアイテム一覧のテスト', () => {
     .expect('jsonTypes', '*', itemListSchema)
 })
 
+// ネストしたAPIのリクエストテスト
 it('Qiitaユーザー詳細情報API', async () => {
   const { json } = await frisby.get('https://qiita.com/api/v2/items')
   const itemKey = Object.keys(json).find((key) => {
@@ -53,7 +54,6 @@ it('Qiitaユーザー詳細情報API', async () => {
     return user.id ? true : false
   })
   const userId = json[itemKey].user.id
-  console.log(itemKey)
   frisby.get(`https://qiita.com/api/v2/users/${userId}`)
     .expect('status', 200)
     .expect('jsonTypes', '*', userSchma)
