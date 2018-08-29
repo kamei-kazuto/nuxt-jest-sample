@@ -1,22 +1,24 @@
 const frisby = require('frisby');
 const Joi = frisby.Joi; // Frisby exposes Joi for convenience
 
+const optionaryText = Joi.string().allow(null).allow('')
+
 const userSchma = {
   id: Joi.string(),
-  name: Joi.string().allow(''),
+  name: optionaryText,
   profile_image_url: Joi.string(),
-  description: Joi.string(),
-  facebook_id: Joi.string(),
+  description: optionaryText,
+  facebook_id: optionaryText,
   followees_count: Joi.number().integer(),
   followers_count: Joi.number().integer(),
-  github_login_name: Joi.string(),
+  github_login_name: optionaryText,
   items_count: Joi.number().integer(),
-  linkedin_id: Joi.string(),
-  location: Joi.string(),
-  organization: Joi.string(),
-  permanent_id: Joi.string(),
-  twitter_screen_name: Joi.string(),
-  website_url: Joi.string(),
+  linkedin_id: optionaryText,
+  location: optionaryText,
+  organization: optionaryText,
+  permanent_id: optionaryText,
+  twitter_screen_name: optionaryText,
+  website_url: optionaryText,
 }
 
 const itemListSchema = {
@@ -45,12 +47,19 @@ it('Qiitaアイテム一覧のテスト', () => {
 })
 
 it('Qiitaユーザー詳細情報API', async () => {
-  const qiitaItems = await frisby.get('https://qiita.com/api/v2/items')
-  const userId = qiitaItems[0].user.id
-  frisby.get('https://qiita.com/api/v2/users/' + userId )
+  // const qiitaItems = await frisby.get('https://qiita.com/api/v2/items')
+  // const itemKey = Object.keys(qiitaItems).find((key) => {
+  //   const user = qiitaItems[key]
+  //   // console.log(id)
+  //   console.log(user)
+  //   // if (!user) return false
+  //   // return user.id ? true : false
+  // })
+  // console.log(itemKey)
+  frisby.get('https://qiita.com/api/v2/users/pscreator' )
     .expect('status', 200)
-    // .expect('json', '*', {
-    //   postId: postId
-    // })
+    .expect('json', '*', {
+      postId: postId
+    })
     .expect('jsonTypes', '*', userSchma)
 })
