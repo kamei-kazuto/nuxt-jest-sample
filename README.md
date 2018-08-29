@@ -129,6 +129,7 @@ storiesOf('sample', module) // sampleの部分をスラッシュで区切ると�
 ```
 
 ### StoryBookを利用したStoryShotsの導入方法
+DOM構造の変更を検知できるためUIの崩れを防止できる。
 
 1. ライブラリの追加
 https://github.com/storybooks/storybook/tree/master/addons/storyshots/storyshots-core
@@ -157,7 +158,18 @@ import initStoryshots from '@storybook/addon-storyshots'
 initStoryshots()
 ```
 
-3. __snapshots__にスナップショットのファイルが生成される。
+3. 下記のコマンドを実行すると__snapshots__にスナップショットのファイルが生成される。
+
+```
+yarn test
+
+or 
+
+jest
+```
+
+DOM構造が変更されているとテストに失敗する。
+変更したい場合は`yarn test -u`を実行するとスナップショットが更新される。
 
 ## 参考にした記事
 

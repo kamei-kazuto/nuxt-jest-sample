@@ -1,7 +1,5 @@
 <template>
-  <section class="container">
-    <p>{{ product }} は {{ priceWithTax }}円</p>
-  </section>
+  <p>{{ product }} は {{ priceWithTax }}円</p>
 </template>
 
 <script>
