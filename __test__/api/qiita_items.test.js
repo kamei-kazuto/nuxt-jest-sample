@@ -16,7 +16,7 @@ const userSchma = {
   linkedin_id: optionaryText,
   location: optionaryText,
   organization: optionaryText,
-  permanent_id: optionaryText,
+  permanent_id: Joi.number().integer(),
   twitter_screen_name: optionaryText,
   website_url: optionaryText,
 }
@@ -47,19 +47,14 @@ it('Qiitaアイテム一覧のテスト', () => {
 })
 
 it('Qiitaユーザー詳細情報API', async () => {
-  // const qiitaItems = await frisby.get('https://qiita.com/api/v2/items')
-  // const itemKey = Object.keys(qiitaItems).find((key) => {
-  //   const user = qiitaItems[key]
-  //   // console.log(id)
-  //   console.log(user)
-  //   // if (!user) return false
-  //   // return user.id ? true : false
-  // })
-  // console.log(itemKey)
-  frisby.get('https://qiita.com/api/v2/users/pscreator' )
+  const { json } = await frisby.get('https://qiita.com/api/v2/items')
+  const itemKey = Object.keys(json).find((key) => {
+    const user = json[key]
+    return user.id ? true : false
+  })
+  const userId = json[itemKey].user.id
+  console.log(itemKey)
+  frisby.get(`https://qiita.com/api/v2/users/${userId}`)
     .expect('status', 200)
-    .expect('json', '*', {
-      postId: postId
-    })
     .expect('jsonTypes', '*', userSchma)
 })
