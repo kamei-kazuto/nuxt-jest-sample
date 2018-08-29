@@ -7,13 +7,14 @@ vue init nuxt-community/starter-template <project-name>
 ## Nuxtでのjestの導入方法
 
 1. 必要なライブラリをインストール
+
 ```
 yarn add -D jest jest-vue-preprocessor babel-jest vue-test-utils
 ```
 
 2. jest.config.jsを追加
 
-```
+```javascript
 // jest.config.js
 const {defaults} = require('jest-config')
 module.exports = {
@@ -36,7 +37,7 @@ https://jestjs.io/docs/ja/configuration.html
 
 3. .babelrcを追加
 
-```
+```json
 {
   "presets": ["env"]
 }
@@ -44,7 +45,7 @@ https://jestjs.io/docs/ja/configuration.html
 
 4. package.jsonにscriptに追加して実行
 
-```
+```json
 "scripts": {
   "test": "jest",
   ...
@@ -78,13 +79,14 @@ https://github.com/hapijs/joi/blob/v13.6.0/API.md
 
 
 - nullを許容したいときは下記のようにする。
+
 ```
 param: Joi.string().allow(null),
 ```
 
 - リクエストしたデータを使いたいときは下記のようにする。
 
-```
+```javascript
 const { json } = await frisby.get('https://*********.com')
 ```
 
@@ -97,19 +99,22 @@ yarn add @storybook/vue
 
 2. 設定ファイル（.storybook/config.js）を追加する。
 
-```
+```javascript
 import { configure } from '@storybook/vue'
 
+// ここで読み取るファイルを指定。
+const req = require.context('../stories', true, /.stories.js$/) 
+
 const loadStories = () => {
-  require("../stories/index") // ここに読み取るstorybook内容を追加
+  req.keys().forEach(filename => req(filename));
 }
 
 configure(loadStories, module)
-```
 
+```
 3. componentの内容を設定ファイルで追加した位置に追加
 
-```
+```javascript
 import { storiesOf } from '@storybook/vue'
 import sample from '../components/sample.vue'
 
@@ -123,6 +128,36 @@ storiesOf('sample', module) // sampleの部分をスラッシュで区切ると�
 
 ```
 
+### StoryBookを利用したStoryShotsの導入方法
+
+1. ライブラリの追加
+https://github.com/storybooks/storybook/tree/master/addons/storyshots/storyshots-core
+
+```
+yarn add -D @storybook/addon-storyshots
+```
+
+2. 設定内容の追加
+- jest.config.jsに下記を追加
+
+```javascript
+module.exports = {
+  ...
+  transformIgnorePatterns: [
+    '/node_modules/(?!(@storybook/.*\\.vue$))',
+  ],
+  ...
+}
+```
+
+- Sroryshots.test.jsファイルを追加
+```javascript
+import initStoryshots from '@storybook/addon-storyshots'
+
+initStoryshots()
+```
+
+3. __snapshots__にスナップショットのファイルが生成される。
 
 ## 参考にした記事
 
